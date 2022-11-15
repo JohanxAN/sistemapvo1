@@ -1,0 +1,99 @@
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+
+                            <span id="card_title">
+                                {{ __('Detalle de Venta') }}
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="thead">
+                                    <tr>
+										<th>Producto</th>
+                                        <th>Precio Unitario</th>
+										<th>Cantidad</th>
+                                        <th>Subtotal</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($ventaList as $ventaDetalle)
+                                        <tr>
+											<td>{{ $ventaDetalle->descripcion_producto }}</td>
+                                            <td>{{ $ventaDetalle->precio_venta_producto }}</td>
+											<td>{{ $ventaDetalle->cantidad }}</td>
+                                            <td>{{ $ventaDetalle->cantidad * $ventaDetalle->precio_venta_producto }}</td>
+                                            <td>
+                                            <form action="{{ route('venta-detalles.destroy',$ventaDetalle->id_producto) }}" method="POST">
+                                            @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                            </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="box box-info padding-1">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <strong>Documento:</strong>
+                                    <select class="form-control" name="documento">
+                                        <option value="0">Boleta</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <strong>Tipo Pago:</strong>
+                                    <select class="form-control" name="tipo_pago">
+                                        <option value="0">Efectivo</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <p>Subtotal: ${{$total}}</p>
+                        <p>IVA: ${{$total * 0.19}}</p>
+                        <p>Total: $<span id="total">{{$total *1.19}}</span></p>
+                        <hr>
+                        <strong>Monto Efectivo: $</strong>
+                        <input type="number" id="pago" name="pago" step="1"  value=""/>
+                        <p  class="text-danger">Vuelto: $<span id="vuelto">0</span></p>
+                        <a href="{{ route('venta-cabeceras.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                            {{ __('GUARDAR') }}
+                        </a>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let total = document.getElementById('total').innerText; 
+        let pago = document.getElementById('pago'); 
+        var vuelto = document.getElementById("vuelto");
+        pago.addEventListener("keyup", function(){
+            const newTotal =  parseInt(this.value)-parseInt(total)
+            if(newTotal > 0){
+                vuelto.textContent = newTotal;
+            }else{
+                vuelto.textContent = 0;
+            }
+        });
+
+    </script>
