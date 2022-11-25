@@ -10,8 +10,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="float-right">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
                             <a class="btn btn-primary" href="{{ route('venta-cabeceras.index') }}"> Volver</a>
+                             <div class="float-right">
+                                <form action="{{ route('productos.destroy',$ventaCabecera->id) }}" method="POST">
+                                    <a class="btn btn-sm btn-primary " href="{{ route('venta-cabeceras.pdf',$ventaCabecera->id) }}"><i class="fa fa-fw fa-eye"></i> Mostrar</a>
+                                </form>
+                            </div>
                         </div>
                     </div>
 
@@ -33,7 +38,6 @@
                                         <th>Precio Unitario</th>
 										<th>Cantidad</th>
                                         <th>Total Venta</th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 

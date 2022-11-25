@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 use App\Models\Producto;
+use App\Models\Empresa;
 use App\Models\VentaDetalle;
 use App\Models\VentaCabecera;
 use Illuminate\Http\Request;
+use PDF;
+
 session_start();
 date_default_timezone_set('America/Santiago');
 
@@ -128,5 +131,17 @@ class VentaCabeceraController extends Controller
 
         return redirect()->route('venta-cabeceras.index')
             ->with('success', 'VentaCabecera eliminado correctamente');
+    }
+
+    public function pdf($id)
+    {
+        $ventaCabecera = VentaCabecera::find($id);
+        $ventaDetalles = VentaDetalle::where('id_boleta', $id)->with(['producto'])->get();
+        $empresa = Empresa::where('id', $ventaCabecera->id_empresa)->first();
+
+        $pdf = PDF::loadView("venta-cabecera.pdf", ['ventaCabecera' => $ventaCabecera, "ventaDetalles" => $ventaDetalles, "empresa" => $empresa]);
+        return $pdf->stream();
+        return view('venta-cabecera.pdf', compact('ventaCabecera', "ventaDetalles", "empresa"));
+
     }
 }
