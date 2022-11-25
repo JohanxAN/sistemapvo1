@@ -48,10 +48,11 @@ class VentaCabeceraController extends Controller
     
         
         foreach ($productos as $key => $value) {
-            $detalle = ["id_boleta" => $ventaCabecera["id"], "id_producto"=>$value->id_producto, "cantidad"=> $value->cantidad, "total_venta"=>0, "fecha_venta"=>date("Y-m-d H:i:s")];
+            $detalle = ["id_boleta" => $ventaCabecera["id"], "id_producto"=>$value->id_producto, "cantidad"=> $value->cantidad, "precio_unitario"=>$value->precio_venta_producto,"total_venta"=>($value->precio_venta_producto * $value->cantidad), "fecha_venta"=>date("Y-m-d H:i:s")];
            
             $producto = Producto::find($value->id_producto);
             $producto->stock_producto = (int)$producto->stock_producto - (int)$value->cantidad;
+            $producto->ventas_producto = (int)$producto->ventas_producto + (int)$value->cantidad;
             $producto->save();
            
             $ventaDetalle = VentaDetalle::create($detalle);
@@ -69,27 +70,6 @@ class VentaCabeceraController extends Controller
      */
     public function store(Request $request)
     {
-        $productos = $_SESSION["CART"];
-        $total = 0;
-        foreach ($productos as $key => $value) {
-            $total += $value->precio_venta_producto;
-        }
-
-        $IVA = $total*0.19;
-
-        $venta = ["id_empresa" => 1, "descripcion" => "", "subtotal" => $total, "IVA" => $IVA, "total_venta" => $total + $IVA, "fecha_venta" => date("Y-m-d H:i:s")];
-        $ventaCabecera = VentaCabecera::create($venta);
-
-        foreach ($productos as $key => $value) {
-            
-            $detalle = ["id_boleta" => $ventaCabecera["id"], "id_producto"=>$value->id, "cantidad"=> $value->cantidad, "total_venta"=>0, "fecha_venta"=>date("Y-m-d H:i:s")];
-            $producto = Producto::find($value->id);
-            $producto->stock_producto = (int)$producto->stock_producto - (int)$value->cantidad;
-           
-            $producto->save();
-           
-            $ventaDetalle = VentaDetalle::create($detalle);          
-        }
         return redirect()->route('home')
             ->with('success', 'Venta creada correctamente.');
     }

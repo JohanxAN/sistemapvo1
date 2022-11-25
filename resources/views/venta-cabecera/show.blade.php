@@ -30,7 +30,9 @@
                                 <thead class="thead">
                                     <tr>
 										<th>Producto</th>
+                                        <th>Precio Unitario</th>
 										<th>Cantidad</th>
+                                        <th>Total Venta</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -39,7 +41,9 @@
                                     @foreach ($ventaDetalles as $ventaDetalle)
                                         <tr>
 											<td>{{ $ventaDetalle->producto->descripcion_producto }}</td>
+                                            <td>${{ $ventaDetalle->precio_unitario }}</td>
 											<td>{{ $ventaDetalle->cantidad }}</td>
+                                            <td>${{ $ventaDetalle->total_venta }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -49,15 +53,15 @@
 
                         <div class="form-group">
                             <strong>Subtotal:</strong>
-                            {{ $ventaCabecera->subtotal }}
+                            $ {{ $ventaCabecera->subtotal }}
                         </div>
                         <div class="form-group">
                             <strong>Iva:</strong>
-                            {{ $ventaCabecera->IVA }}
+                            $ {{ $ventaCabecera->IVA }}
                         </div>
                         <div class="form-group">
                             <strong>Total Venta:</strong>
-                            {{ $ventaCabecera->total_venta }}
+                            $ {{ $ventaCabecera->total_venta }}
                         </div>
                        
 

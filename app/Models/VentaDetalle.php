@@ -36,7 +36,7 @@ class VentaDetalle extends Model
      *
      * @var array
      */
-    protected $fillable = ['id_boleta','id_producto','cantidad','total_venta','fecha_venta'];
+    protected $fillable = ['id_boleta','id_producto','cantidad',"precio_unitario",'total_venta','fecha_venta'];
 
 
     /**

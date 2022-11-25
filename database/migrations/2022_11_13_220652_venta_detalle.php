@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger("id_boleta");
             $table->unsignedBigInteger("id_producto");
             $table->float("cantidad");
+            $table->float("precio_unitario");
             $table->float("total_venta");
             $table->dateTime("fecha_venta");
             $table->foreign("id_boleta")->references("id")->on("venta_cabeceras")->onDelete('cascade');
