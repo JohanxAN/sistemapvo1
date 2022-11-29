@@ -39,7 +39,7 @@
                             <tbody>
                                 @foreach ($ventaDetalles as $ventaDetalle)
                                     <tr>
-                                        <td>{{ $ventaDetalle->producto->descripcion_producto }}</td>
+                                        <td>{{ $ventaDetalle->descripcion_producto }}</td>
                                         <td>${{ $ventaDetalle->precio_unitario }}</td>
                                         <td>{{ $ventaDetalle->cantidad }}</td>
                                         <td>${{ $ventaDetalle->total_venta }}</td>

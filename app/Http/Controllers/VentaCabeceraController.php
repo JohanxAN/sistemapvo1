@@ -74,7 +74,7 @@ class VentaCabeceraController extends Controller
     
         
         foreach ($productos as $key => $value) {
-            $detalle = ["id_boleta" => $ventaCabecera["id"], "id_producto"=>$value->id_producto, "cantidad"=> $value->cantidad, "precio_unitario"=>$value->precio_venta_producto,"total_venta"=>($value->precio_venta_producto * $value->cantidad), "fecha_venta"=>date("Y-m-d H:i:s")];
+            $detalle = ["id_boleta" => $ventaCabecera["id"], "codigo_producto"=>$value->codigo_producto, "descripcion_producto"=>$value->descripcion_producto,"cantidad"=> $value->cantidad, "precio_unitario"=>$value->precio_venta_producto,"total_venta"=>($value->precio_venta_producto * $value->cantidad), "fecha_venta"=>date("Y-m-d H:i:s")];
            
             $producto = Producto::find($value->id_producto);
             $producto->stock_producto = (int)$producto->stock_producto - (int)$value->cantidad;
@@ -97,7 +97,7 @@ class VentaCabeceraController extends Controller
     public function show($id)
     {
         $ventaCabecera = VentaCabecera::find($id);
-        $ventaDetalles = VentaDetalle::where('id_boleta', $id)->with(['producto'])->get();
+        $ventaDetalles = VentaDetalle::where('id_boleta', $id)->get();
         return view('venta-cabecera.show', compact('ventaCabecera', "ventaDetalles"));
     }
 
@@ -147,7 +147,7 @@ class VentaCabeceraController extends Controller
     public function pdf($id)
     {
         $ventaCabecera = VentaCabecera::find($id);
-        $ventaDetalles = VentaDetalle::where('id_boleta', $id)->with(['producto'])->get();
+        $ventaDetalles = VentaDetalle::where('id_boleta', $id)->get();
         $empresa = Empresa::where('id', $ventaCabecera->id_empresa)->first();
 
         $pdf = PDF::loadView("venta-cabecera.pdf", ['ventaCabecera' => $ventaCabecera, "ventaDetalles" => $ventaDetalles, "empresa" => $empresa]);

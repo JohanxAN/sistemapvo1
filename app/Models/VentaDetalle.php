@@ -36,16 +36,7 @@ class VentaDetalle extends Model
      *
      * @var array
      */
-    protected $fillable = ['id_boleta','id_producto','cantidad',"precio_unitario",'total_venta','fecha_venta'];
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function producto()
-    {
-        return $this->hasOne('App\Models\Producto', 'id', 'id_producto');
-    }
+    protected $fillable = ['id_boleta','codigo_producto','descripcion_producto','cantidad',"precio_unitario",'total_venta','fecha_venta'];
     
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

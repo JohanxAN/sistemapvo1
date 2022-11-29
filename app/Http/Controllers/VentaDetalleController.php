@@ -63,7 +63,7 @@ class VentaDetalleController extends Controller
 
         $producto = Producto::find($request["id_producto"]);
 
-        $data = (object)["id_producto" => $request["id_producto"], "descripcion_producto" => $producto->descripcion_producto, "cantidad" => $request["cantidad"], "precio_venta_producto" => $producto->precio_venta_producto];
+        $data = (object)["id_producto" => $request["id_producto"], "codigo_producto" => $producto->codigo_producto, "descripcion_producto" => $producto->descripcion_producto, "cantidad" => $request["cantidad"], "precio_venta_producto" => $producto->precio_venta_producto];
        
         if($request["cantidad"] > $producto->stock_producto){
             $message = 'Sin Stock. Stock Disponible '.$producto->stock_producto.' unidades de '.$producto->descripcion_producto;
