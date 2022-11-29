@@ -38,15 +38,38 @@ class VentaCabeceraController extends Controller
      */
     public function create()
     {
+ 
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+
         $productos = $_SESSION["CART"];
+        if(count($productos) == 0){
+            $message = 'Debe ingresar productos';
+            return redirect()->route('venta-detalles.create')
+            ->with('error', $message);
+        }
         $total = 0;
         foreach ($productos as $key => $value) {
             $total += $value->precio_venta_producto * $value->cantidad;
         }
 
+        if(!$request->monto_efectivo ||$request->monto_efectivo< $total){
+            $message = 'Debe ingresar el monto en efectivo';
+            return redirect()->route('venta-detalles.create')
+            ->with('error', $message);
+        }
+
         $IVA = $total*0.19;
 
-        $venta = ["id_empresa" => 1, "descripcion" => "", "subtotal" => $total, "IVA" => $IVA, "total_venta" => $total + $IVA, "fecha_venta" => date("Y-m-d H:i:s")];
+        $venta = ["id_empresa" => 1, "descripcion" => "", "subtotal" => $total, "IVA" => $IVA, "total_venta" => $total + $IVA, "fecha_venta" => date("Y-m-d H:i:s"), "monto_efectivo" => $request->monto_efectivo];
         $ventaCabecera = VentaCabecera::create($venta);
     
         
@@ -63,18 +86,6 @@ class VentaCabeceraController extends Controller
         $_SESSION["CART"] = [];
         return redirect()->route('venta-cabeceras.show',$ventaCabecera->id)
             ->with('success', 'VentaCabecera creado correctamente.');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        return redirect()->route('home')
-            ->with('success', 'Venta creada correctamente.');
     }
 
     /**

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->float("IVA");
             $table->float("total_venta");
             $table->dateTime("fecha_venta");
+            $table->float("monto_efectivo");
             $table->foreign("id_empresa")->references("id")->on("empresas");
             $table->timestamps();
             });

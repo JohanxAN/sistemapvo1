@@ -26,12 +26,13 @@ class VentaCabecera extends Model
 {
     
     static $rules = [
-		'id_empresa' => 'required',
-		'descripcion' => 'required',
-		'subtotal' => 'required',
-		'IVA' => 'required',
-		'total_venta' => 'required',
-		'fecha_venta' => 'required',
+		'id_empresa',
+		'descripcion',
+		'subtotal',
+		'IVA',
+		'total_venta',
+		'fecha_venta',
+        'monto_efectivo' => 'required',
     ];
 
     protected $perPage = 20;
@@ -41,7 +42,7 @@ class VentaCabecera extends Model
      *
      * @var array
      */
-    protected $fillable = ['id_empresa','descripcion','subtotal','IVA','total_venta','fecha_venta'];
+    protected $fillable = ['id_empresa','descripcion','subtotal','IVA','total_venta','fecha_venta', 'monto_efectivo'];
 
 
     /**

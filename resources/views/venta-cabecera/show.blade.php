@@ -14,7 +14,7 @@
                             <a class="btn btn-primary" href="{{ route('venta-cabeceras.index') }}"> Volver</a>
                              <div class="float-right">
                                 <form action="{{ route('productos.destroy',$ventaCabecera->id) }}" method="POST">
-                                    <a class="btn btn-sm btn-primary " href="{{ route('venta-cabeceras.pdf',$ventaCabecera->id) }}"><i class="fa fa-fw fa-eye"></i> Mostrar</a>
+                                    <a class="btn btn-sm btn-primary " href="{{ route('venta-cabeceras.pdf',$ventaCabecera->id) }}"><i class="fa fa-fw fa-eye"></i>BOLETA</a>
                                 </form>
                             </div>
                         </div>

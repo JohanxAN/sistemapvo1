@@ -70,12 +70,21 @@
                         <p>IVA: ${{$total * 0.19}}</p>
                         <p>Total: $<span id="total">{{$total *1.19}}</span></p>
                         <hr>
-                        <strong>Monto Efectivo: $</strong>
-                        <input type="number" id="pago" name="pago" step="1"  value=""/>
-                        <p  class="text-danger">Vuelto: $<span id="vuelto">0</span></p>
-                        <a href="{{ route('venta-cabeceras.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                            {{ __('GUARDAR') }}
-                        </a>
+                        <form method="POST" action="{{ route('venta-cabeceras.store') }}"  role="form" enctype="multipart/form-data">
+                            @csrf
+                            <strong>Monto Efectivo: $</strong>
+                            <div class="form-group">
+                                {{ Form::label('Monto Efectivo') }}
+                                {{ Form::number('monto_efectivo', 0, ['id' => 'pago', 'class' => 'form-control' . ($errors->has('monto_efectivo') ? ' is-invalid' : ''), 'placeholder' => 'Monto Efectivo']) }}
+                                {!! $errors->first('monto_efectivo', '<div class="invalid-feedback">:message</div>') !!}
+                            </div>
+                            <p  class="text-danger">Vuelto: $<span id="vuelto">0</span></p>
+                            <div class="box-footer mt20">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+
+                        </form>
+                        
                     </div>
                 </div>
                

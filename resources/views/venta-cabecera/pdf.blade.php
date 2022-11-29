@@ -64,7 +64,7 @@
                         </div>
                         <div class="form-group">
                             <strong>Vuelto:</strong>
-                            $ {{ $ventaCabecera->total_venta }}
+                            $ {{ $ventaCabecera->monto_efectivo - $ventaCabecera->total_venta }}
                         </div>
                     </div>
  
