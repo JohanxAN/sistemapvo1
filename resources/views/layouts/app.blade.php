@@ -43,6 +43,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('venta-cabeceras.index') }}">{{ __('Ventas') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('home') }}">{{ __('Gráfico') }}</a>
+                        </li>
                         </ul>
                     @endif
                     <!-- Right Side Of Navbar -->
